@@ -12,6 +12,8 @@ import * as colour from '../Styles/Colours';
 import * as size from '../Styles/Mixins';
 import AddDetailFormModal from '../Components/organisms/AddDetailFormModal';
 import * as constants from '../Utils/constants';
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 class AddDiabeticInfo extends Component {
   constructor(props) {
@@ -21,6 +23,8 @@ class AddDiabeticInfo extends Component {
       modalVisible: false,
       formModalVisible: false,
       formType: '',
+      date: new Date(),
+      renderCalenderPicker: false,
     };
   }
 
@@ -38,10 +42,35 @@ class AddDiabeticInfo extends Component {
     });
   };
 
+  openCalenderPicker = selectedDate => {
+    this.setState({formModalVisible: false, date: selectedDate}, () => {
+      this.setState({renderCalenderPicker: true});
+    });
+  };
+
+  setDates = (event, selectedDate) => {
+    this.setState({date: selectedDate, renderCalenderPicker: false}, () => {
+      this.setState({formModalVisible: true});
+    });
+  };
+
+  saveFormDate = data => {
+    this.setState({formModalVisible: false});
+    // store in redux
+    console.log('saveFormDate : ', data);
+  };
+
   render() {
-    const {modalVisible, formModalVisible, formType} = this.state;
+    const {
+      modalVisible,
+      formModalVisible,
+      formType,
+      date,
+      renderCalenderPicker,
+    } = this.state;
     return (
       <View style={styles.container}>
+        {/* Floating Add Button */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.addButtonStyle}
@@ -51,6 +80,9 @@ class AddDiabeticInfo extends Component {
             <Text>Add +</Text>
           </TouchableOpacity>
         </View>
+        {/* Floating Add Button */}
+
+        {/* Modal to select the reading type BP or diabetic */}
         <View>
           <Modal
             animationType="slide"
@@ -84,21 +116,54 @@ class AddDiabeticInfo extends Component {
             </TouchableWithoutFeedback>
           </Modal>
         </View>
+        {/* Modal to select the reading type BP or diabetic */}
+
+        {/* Form */}
         <View>
           <AddDetailFormModal
             closeModal={() => {
               this.setState({formModalVisible: false});
             }}
+            date={date}
             formType={formType}
             modalVisible={formModalVisible}
+            datePickRequest={selectedDate => {
+              this.openCalenderPicker(selectedDate);
+            }}
+            saveFormDate={formData => {
+              this.saveFormDate(formData);
+            }}
           />
         </View>
+        {/* Form */}
+
+        {/* Date Picker Modal */}
+        {renderCalenderPicker && (
+          <View style={styles.datePickerContainer}>
+            <DateTimePicker
+              timeZoneOffsetInMinutes={0}
+              value={date ? date : new Date()}
+              mode={'date'}
+              is24Hour={true}
+              maximumDate={new Date()}
+              display="default"
+              onChange={this.setDates}
+            />
+          </View>
+        )}
+        {/* Date Picker Modal */}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  datePickerContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   modalContainer: {
     flex: 1,
   },

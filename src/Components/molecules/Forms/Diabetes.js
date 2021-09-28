@@ -4,22 +4,25 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import * as css from '../../../Styles/Colours';
 import * as size from '../../../Styles/Mixins';
 import TextBox from '../../atoms/TextBox';
+import moment from 'moment';
+import SelectorButton from '../../atoms/SelectorButton';
 
 class Diabetes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bBf: 0,
-      aBf: 0,
-      bLun: 0,
-      aLun: 0,
-      bDin: 0,
-      aDin: 0,
+      bBf: '',
+      aBf: '',
+      bLun: '',
+      aLun: '',
+      bDin: '',
+      aDin: '',
       modalVisible: false,
       formModalVisible: false,
       formType: '',
     };
   }
+
   onChangebBf = e => {
     const filterValue = e.replace(/[^0-9]/g, '');
     this.setState({bBf: filterValue});
@@ -44,13 +47,35 @@ class Diabetes extends Component {
     const filterValue = e.replace(/[^0-9]/g, '');
     this.setState({aDin: filterValue});
   };
+  datePickRequest = e => {
+    this.props.datePickRequest(this.props.date);
+  };
+  saveFormRequest = () => {
+    const {bBf, aBf, bLun, aLun, bDin, aDin} = this.state;
+    const formData = {
+      bBf: bBf,
+      aBf: aBf,
+      bLun: bLun,
+      aLun: aLun,
+      bDin: bDin,
+      aDin: aDin,
+      date: this.props.date,
+    };
+    this.props.saveFormDate(formData);
+  };
+
   render() {
     const {bBf, aBf, bLun, aLun, bDin, aDin} = this.state;
     return (
       <View>
-        <View style={styles.containerStyle}>
-          <Text>Calender Picker Here</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            this.datePickRequest();
+          }}>
+          <View style={styles.containerStyle}>
+            <Text>{moment(this.props.date).format('Do MMM YYYY')}</Text>
+          </View>
+        </TouchableOpacity>
         <View>
           <TextBox
             maxLength={3}
@@ -107,6 +132,24 @@ class Diabetes extends Component {
             }}
           />
         </View>
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonLeftSpace}>
+            <SelectorButton
+              label="Cancel"
+              onClick={() => {
+                this.props.closeModal();
+              }}
+            />
+          </View>
+          <View>
+            <SelectorButton
+              label="Save"
+              onClick={() => {
+                this.saveFormRequest();
+              }}
+            />
+          </View>
+        </View>
       </View>
     );
   }
@@ -116,6 +159,26 @@ const styles = StyleSheet.create({
   containerStyle: {
     ...size.FLEX_CENTER,
     marginBottom: 30,
+    height: 30,
+    shadowColor: '#4e4f72',
+    shadowOpacity: 0.6,
+    shadowRadius: 30,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+    borderColor: css.BORDER_COLOR,
+    backgroundColor: css.BUTTON_BACKGROUND_COLOUR,
+    borderWidth: 1,
+    borderRadius: 30,
+    elevation: 30,
+  },
+  buttonContainer: {
+    ...size.FLEX_CENTER,
+    flexDirection: 'row',
+  },
+  buttonLeftSpace: {
+    marginRight: size.BUTTON_SPACE,
   },
 });
 

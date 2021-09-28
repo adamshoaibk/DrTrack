@@ -16,3 +16,4 @@ export const BOTTOM_FIX = {
 };
 
 export const BORDER_RADIUS = 16;
+export const BUTTON_SPACE = 8;
