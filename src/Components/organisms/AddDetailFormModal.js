@@ -30,7 +30,18 @@ class AddDetailFormModal extends Component {
                   {this.props.formType === constant.BloodPreassure ? (
                     <BloodPreassure />
                   ) : (
-                    <Diabetes />
+                    <Diabetes
+                      closeModal={() => {
+                        this.props.closeModal();
+                      }}
+                      date={this.props.date}
+                      datePickRequest={date => {
+                        this.props.datePickRequest(date);
+                      }}
+                      saveFormDate={formData => {
+                        this.props.saveFormDate(formData);
+                      }}
+                    />
                   )}
                 </View>
               </View>

@@ -15,7 +15,7 @@ const TextBox = props => {
           onChangeText={e => {
             props.onChange(e);
           }}
-          value={props.value}
+          value={props.value.toString()}
         />
         <Text>{'mg/dL'}</Text>
       </View>
