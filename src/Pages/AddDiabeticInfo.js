@@ -69,6 +69,7 @@ class AddDiabeticInfo extends Component {
       date,
       renderCalenderPicker,
     } = this.state;
+    console.log('State : ', this.props.diabetesData);
     return (
       <View style={styles.container}>
         {/* Floating Add Button */}
