@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import Router from './src/Router';
+import configureStore from './src/Redux/Reducers';
+import {Provider} from 'react-redux';
 
 class App extends Component {
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <Router />
-      </SafeAreaView>
+      <Provider store={configureStore}>
+        <SafeAreaView style={styles.container}>
+          <Router />
+        </SafeAreaView>
+      </Provider>
     );
   }
 }

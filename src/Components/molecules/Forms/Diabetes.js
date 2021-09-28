@@ -59,6 +59,7 @@ class Diabetes extends Component {
       aLun: aLun,
       bDin: bDin,
       aDin: aDin,
+      dateKey: moment(this.props.date).format('DD-MM-YYYY'),
       date: this.props.date,
     };
     this.props.saveFormDate(formData);

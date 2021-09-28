@@ -23,7 +23,7 @@ class AddDetailFormModal extends Component {
           onRequestClose={() => {
             this.props.closeModal();
           }}>
-          <TouchableWithoutFeedback onPress={this.props.closeModal}>
+          <TouchableWithoutFeedback>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <View>

@@ -12,7 +12,9 @@ import * as colour from '../Styles/Colours';
 import * as size from '../Styles/Mixins';
 import AddDetailFormModal from '../Components/organisms/AddDetailFormModal';
 import * as constants from '../Utils/constants';
-import moment from 'moment';
+import {connect} from 'react-redux';
+import {addDiabetesData} from '../Redux/Actions';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 class AddDiabeticInfo extends Component {
@@ -56,8 +58,7 @@ class AddDiabeticInfo extends Component {
 
   saveFormDate = data => {
     this.setState({formModalVisible: false});
-    // store in redux
-    console.log('saveFormDate : ', data);
+    this.props.addDiabetesData(data);
   };
 
   render() {
@@ -207,4 +208,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddDiabeticInfo;
+const mapStateToProps = (state, ownProps) => {
+  const {diabetesData} = state;
+  return {
+    ...diabetesData,
+  };
+};
+
+export default connect(mapStateToProps, {addDiabetesData})(AddDiabeticInfo);
