@@ -1,8 +1,18 @@
 import {ADD_DATA} from '../Types';
-import moment from 'moment';
 
 const initialState = {
   diabetesData: [],
+};
+
+const sortItemByKey = (filteredList, key = 'date') => {
+  const clonedItems = filteredList.map(item => ({...item}));
+  clonedItems.sort(compare);
+  function compare(a, b) {
+    if (a[key] < b[key]) return -1;
+    if (a[key] > b[key]) return 1;
+    return 0;
+  }
+  return clonedItems;
 };
 
 const diabetesReducer = (state = initialState, action) => {
@@ -23,9 +33,10 @@ const diabetesReducer = (state = initialState, action) => {
           filteredList.push(action.payload);
         }
       }
+      let sortedList = sortItemByKey(filteredList);
       return {
         ...state,
-        diabetesData: filteredList,
+        diabetesData: sortedList,
       };
     default:
       return state;

@@ -14,7 +14,7 @@ import AddDetailFormModal from '../Components/organisms/AddDetailFormModal';
 import * as constants from '../Utils/constants';
 import {connect} from 'react-redux';
 import {addDiabetesData} from '../Redux/Actions';
-
+import ReadingsList from '../Components/organisms/ReadingsList';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 class AddDiabeticInfo extends Component {
@@ -72,6 +72,14 @@ class AddDiabeticInfo extends Component {
     console.log('State : ', this.props.diabetesData);
     return (
       <View style={styles.container}>
+        {/* Readings List */}
+        <View>
+          <ReadingsList
+            length={this.props.diabetesData.length}
+            data={this.props.diabetesData}
+          />
+        </View>
+        {/* Readings List */}
         {/* Floating Add Button */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity

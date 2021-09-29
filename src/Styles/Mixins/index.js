@@ -15,5 +15,16 @@ export const BOTTOM_FIX = {
   alignSelf: 'center',
 };
 
+export const FLEX_ROW = {
+  display: 'flex',
+  flexDirection: 'row',
+};
+
+export const FLEX_COLUMN = {
+  display: 'flex',
+  flexDirection: 'column',
+};
+
 export const BORDER_RADIUS = 16;
 export const BUTTON_SPACE = 8;
+export const ICON_SIZE = 20;
