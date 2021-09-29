@@ -6,6 +6,7 @@ import * as size from '../../../Styles/Mixins';
 import TextBox from '../../atoms/TextBox';
 import moment from 'moment';
 import SelectorButton from '../../atoms/SelectorButton';
+import * as constants from '../../../Utils/constants';
 
 class Diabetes extends Component {
   constructor(props) {
@@ -53,14 +54,17 @@ class Diabetes extends Component {
   saveFormRequest = () => {
     const {bBf, aBf, bLun, aLun, bDin, aDin} = this.state;
     const formData = {
-      bBf: bBf,
-      aBf: aBf,
-      bLun: bLun,
-      aLun: aLun,
-      bDin: bDin,
-      aDin: aDin,
+      readings: {
+        bBf: bBf,
+        aBf: aBf,
+        bLun: bLun,
+        aLun: aLun,
+        bDin: bDin,
+        aDin: aDin,
+      },
       dateKey: moment(this.props.date).format('DD-MM-YYYY'),
       date: this.props.date,
+      type: constants.Diabetes,
     };
     this.props.saveFormDate(formData);
   };
